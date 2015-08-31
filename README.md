@@ -8,6 +8,13 @@ DNS name via a template paramater.
 
 This is expected to run in the same cluster as the services it advertises.
 
+### Origin
+
+This started taking `kube2sky`, removing all the skyDNS parts, and adding
+the DNSimple parts. The endpoint parts were also removed because the idea
+is that DNSimple contains the globally addressable parts only
+(ie, the LoadBalancer Ingress points)
+
 ## Namespaces
 
 Users are free to use namespaces to construct the DNS names as they wish.
