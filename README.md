@@ -56,3 +56,35 @@ construct a name. See Template above.
 
 `--kubecfg_file`: Path to kubecfg file that contains the master URL and tokens to authenticate with the master.
 
+## Docker image
+
+The docker image to use is: `vektra/kube2dnsimple:1.10`.
+
+## Kubernetes definition
+
+Here is a simple definition to get you started:
+
+```
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    name: dnsimple
+  name: dnsimple
+spec:
+  replicas: 1
+  selector:
+    component: dnsimple
+  template:
+    metadata:
+      labels:
+        app: valar
+        component: dnsimple
+    spec:
+      containers:
+      - name: kube2dnsimple
+        image: vektra/kube2dnsimple:1.10
+        args: ["-alsologtostderr=true", "-v=5", "-domain=myinfradomain.com",
+               "-email=foo@bar.com", "-token=aabbcc",
+                "-template=k8-{{or (.Label \"public-name\") .Service.Name}}"]
+```
